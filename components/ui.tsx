@@ -98,13 +98,15 @@ export function Button({
   children,
   className = "",
   href,
-  disabled
+  disabled,
+  onClick
 }: { 
   variant?: 'primary' | 'secondary' | 'tertiary',
   children: ReactNode,
   className?: string,
   href?: string,
-  disabled?: boolean
+  disabled?: boolean,
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }) {
   const baseClasses = "inline-flex items-center justify-center font-body uppercase tracking-widest text-xs transition-all";
   let variantClasses = "";
@@ -128,7 +130,7 @@ export function Button({
   }
 
   return (
-    <button className={combinedClasses} disabled={disabled}>
+    <button className={combinedClasses} disabled={disabled} onClick={onClick}>
       {children}
     </button>
   );

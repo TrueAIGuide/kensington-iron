@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 
 export type Coach = {
+  id?: string;
   name: string;
   specialty: string;
   image: string;

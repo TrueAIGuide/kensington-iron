@@ -3,11 +3,17 @@ import { EditorialCard } from "@/components/EditorialCard";
 import dynamic from "next/dynamic";
 
 const MembershipPrivileges = dynamic(() => import("@/components/memberships/MembershipPrivileges").then((mod) => mod.MembershipPrivileges));
+import { CheckoutButton } from "@/components/memberships/CheckoutButton";
+import { SuccessVerifier } from "@/components/memberships/SuccessVerifier";
+import { Suspense } from "react";
 
 export default function Memberships() {
   return (
     <main className="min-h-screen bg-surface">
       <Navigation />
+      <Suspense fallback={null}>
+        <SuccessVerifier />
+      </Suspense>
       
       {/* Header */}
       <section className="pt-40 pb-20 px-6 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
@@ -57,7 +63,7 @@ export default function Memberships() {
               </li>
             </ul>
           </div>
-          <Button href="/contact?type=Membership+Application&plan=The+Foundation" variant="secondary" className="w-full text-center block !text-[10px] tracking-widest !py-4 border-outline-variant/30 text-on-surface-variant hover:text-on-surface">SELECT</Button>
+          <CheckoutButton priceId="price_1TF4e6Dc9AXL3r8M3J172ad7" planName="Essential" variant="secondary" className="w-full text-center block !text-[10px] tracking-widest !py-4 border-outline-variant/30 text-on-surface-variant hover:text-on-surface" />
         </div>
 
         {/* Tier 2: Premium */}
@@ -91,7 +97,7 @@ export default function Memberships() {
               </li>
             </ul>
           </div>
-          <Button href="/contact?type=Membership+Application&plan=The+Atelier+Premium" variant="primary" className="w-full text-center block !text-[10px] tracking-widest !py-4">SELECT</Button>
+          <CheckoutButton priceId="price_1TF4eDDc9AXL3r8M2JasOE60" planName="Premium" variant="primary" className="w-full text-center block !text-[10px] tracking-widest !py-4" />
         </div>
 
         {/* Tier 3: Exclusive */}
@@ -122,7 +128,7 @@ export default function Memberships() {
               </li>
             </ul>
           </div>
-          <Button href="/contact?type=Membership+Application&plan=The+Exclusive" variant="secondary" className="w-full text-center block border-primary text-primary hover:bg-primary/10 !text-[10px] tracking-widest !py-4">SELECT</Button>
+          <CheckoutButton priceId="price_1TF4eEDc9AXL3r8M4GYmbVea" planName="Exclusive" variant="secondary" className="w-full text-center block border-primary text-primary hover:bg-primary/10 !text-[10px] tracking-widest !py-4" />
         </div>
       </section>
 

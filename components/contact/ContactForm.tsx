@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui";
 
+import { submitContactMessage } from "@/app/contact/actions";
+
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -10,8 +12,6 @@ export function ContactForm() {
   const [initialMessage, setInitialMessage] = useState("");
 
   useEffect(() => {
-    // We use window.location.search directly to avoid having to wrap the component in a React Suspense Boundary 
-    // which useSearchParams() requires in Next.js 13+ app dir.
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       const typeStr = params.get("type");
@@ -30,21 +30,11 @@ export function ContactForm() {
     setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
-    const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      type: formData.get("type"),
-      message: formData.get("message"),
-    };
 
     try {
-      const res = await fetch("https://formspree.io/f/xdawylzz", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (res.ok) {
+      const res = await submitContactMessage(formData);
+      
+      if (res.success) {
         setIsSuccess(true);
       } else {
         alert("Failed to send message. Please try again.");

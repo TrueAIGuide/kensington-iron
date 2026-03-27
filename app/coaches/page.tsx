@@ -1,7 +1,25 @@
 import { Navigation, Footer, Button } from "@/components/ui";
 import { CoachDirectory } from "@/components/coaches/CoachDirectory";
+import { createClient } from "@/lib/supabase/server";
 
-export default function Coaches() {
+export const dynamic = 'force-dynamic';
+
+export default async function Coaches() {
+  const supabase = await createClient();
+  const { data: coaches } = await supabase
+    .from("coaches")
+    .select("*")
+    .order("order_index", { ascending: true });
+
+  const parsedCoaches = coaches?.map((c) => ({
+    id: c.id,
+    name: c.name,
+    specialty: c.specialty,
+    image: c.image,
+    className: c.class_name,
+    bio: c.bio,
+  })) || [];
+
   return (
     <main className="min-h-screen bg-surface">
       <Navigation />
@@ -25,7 +43,7 @@ export default function Coaches() {
       </section>
 
       {/* Asymmetrical Grid */}
-      <CoachDirectory />
+      <CoachDirectory coaches={parsedCoaches} />
 
       {/* Quote & CTA */}
       <section className="py-32 bg-[#171717] border-t border-outline-variant/10 text-center px-6">
