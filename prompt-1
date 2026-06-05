@@ -1,0 +1,83 @@
+Build a complete micro-SaaS web app called "ColdPing" using Next.js 16 and Tailwind CSS v4.
+
+## CORE CONCEPT
+A cold email personalization tool. The landing page IS the tool — no separate pages.
+Users immediately see and can use the generator when they land on the site.
+The Gemini API key must NEVER be exposed to the browser — all AI calls go through
+a Next.js API route on the server side.
+
+## TECH STACK
+- Next.js 16 (App Router)
+- Tailwind CSS v4
+- No external database
+- Gemini API called ONLY from a server-side API route (/api/generate)
+- Gemini model: gemini-2.0-flash
+- API key stored in .env.local as GEMINI_API_KEY (no NEXT_PUBLIC_ prefix)
+- Email waitlist via Formspree (form ID stored in .env.local as FORMSPREE_ID)
+- Frontend calls /api/generate — never calls Gemini directly
+
+RULES:
+- Max 150 words
+- Open with ONE specific hook from their LinkedIn
+- Mention one pain point specific to their role
+- Never say "I hope this email finds you well"
+- Never start with "My name is"
+- Sound like a smart human, not a bot
+
+## COLOR SYSTEM
+- Brand blue: #2563EB
+- Dark blue: #1D4ED8
+- Light blue bg: #EFF6FF
+- Accent: #3B82F6
+- Dark text: #0F172A
+- Muted text: #64748B
+- Background: #FFFFFF
+- Card bg: #F8FAFC
+
+## PAGE STRUCTURE
+
+NAVBAR (sticky top):
+- Logo: "ColdPing" bold, blue dot after the g
+- Right: "Join Waitlist" button
+
+HERO SECTION:
+- Badge: "Powered by Gemini AI"
+- H1: "Cold emails that actually get replies"
+- Subtext: "Paste a LinkedIn profile → get a hyper-personalized email in 3 seconds. Free."
+- Stats: "3 sec generation" and "Free to use"
+
+THE TOOL (two-column desktop, single column mobile):
+LEFT — Inputs:
+- Textarea: "Paste LinkedIn profile text"
+- Input: "Your product or service"
+- Input: "Your CTA"
+- Select: Tone — Friendly & casual / Professional / Direct & bold
+- Button: "Generate Email →"
+
+RIGHT — Output:
+- Placeholder: dashed border, "Your personalized email will appear here"
+- After generation: subject line + email body + Copy button + score badge
+- Loading: spinner + pulse animation
+
+HOW IT WORKS (3 steps):
+1. Paste LinkedIn
+2. Add your details
+3. Get your email
+
+WAITLIST SECTION:
+- POST to https://formspree.io/f/${FORMSPREE_ID}
+- Success: "You're on the list!" in green
+- Error: "Something went wrong." in red
+
+FOOTER:
+- "ColdPing © 2026"
+- "Built with Gemini AI + Antigravity"
+- Dark bg #0F172A, white text
+
+
+## IMPORTANT
+- GEMINI_API_KEY has NO NEXT_PUBLIC_ prefix — server-side only
+- .env.local must be in .gitignore
+- Tailwind v4 uses @import "tailwindcss" in globals.css
+- Copy button changes to "Copied!" for 2 seconds then reverts
+- Fully mobile responsive
